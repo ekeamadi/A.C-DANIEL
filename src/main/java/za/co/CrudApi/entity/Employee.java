@@ -40,8 +40,9 @@ public class Employee implements Serializable {
     private String lastName;
 
     @Basic(optional = false)
-    @Column(name = "MOBILE_NUMBER")
-    private String mobileNumber;
+    @Pattern(regexp = "^\\d{10}$",message = "Account Number must be a valid Scrum Bank Account Number")
+    @Column(name = "BANK_ACCOUNT_NUMBER")
+    private String bankAccountNumber;
 
     @Basic(optional = false)
     @Pattern(regexp = "([0-9][0-9])((?:[0][1-9])|(?:[1][0-2]))((?:[0-2][0-9])|(?:[3][0-1]))([0-9])([0-9]{3})([0-9])([0-9])([0-9])", message = "ID Number must be a valid South Africa ID Number")

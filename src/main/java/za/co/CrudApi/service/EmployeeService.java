@@ -10,6 +10,6 @@ public interface EmployeeService {
 
     Employee updateEmployeeDetails(Employee employee);
 
-    Optional<Employee> searchByFirstNameOrIdNumberOrMobileNumber(String firstName, String idNumber, String mobileNumber);
+    Optional<Employee> searchByFirstNameOrIdNumberOrBankAccountNumber(String firstName, String idNumber, String bankAccountNumber);
 
 }

@@ -22,10 +22,10 @@ public class OpenAPIConfig {
 
     private Info getApiInfo() {
         return new Info()
-                .title( " Employee Application" )
-                .description( "Application for Creating,Updating and Searching For a Client technology." )
+                .title( " Enviro365 Assessment for DANIEL CHMEZIE" )
+                .description( "Application for Scrum Bank Clients Account_Number, First_Name, LastName and SA ID_Number." )
                 .version( "2.0.0" )
-                .contact( new Contact().name( "Temi.Akobi@co.za" ).url( "https://employee.co.za" ).email( "info@employee.co.za" ) );
+                .contact( new Contact().name( "Enviro365I.TSolutions@co.za" ).url( "https://enviro365.co.za" ).email( "careers@enviro365.co.za" ) );
     }
 
 }

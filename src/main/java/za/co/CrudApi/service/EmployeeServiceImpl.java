@@ -21,13 +21,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     private static Map<String, Employee> employeeMap = new HashMap<>();
 
-
+@Override
     public Employee saveEmployeeDetails(Employee employee) {
         //Optional<Employee> searchIdNumber = employeeRepository.findByIdNumber( employee.getIdNumber() );
-        //Optional<Employee> searchMobileNumber = employeeRepository.findByMobileNumber( employee.getMobileNumber() );
+        //Optional<Employee> searchBankAccountNumber = employeeRepository.findByBankAccountNumber( employee.getBankAccountNumber() );
 
 
-        if (!isIDNumberOrMobileNumberExist( employee.getIdNumber(), employee.getMobileNumber() )) {
+        if (!isIDNumberOrBankAccountNumberExist( employee.getIdNumber(), employee.getBankAccountNumber() )) {
             log.info( "inserting new record on Employee table {}", employee.toString() );
             // return employeeRepository.save( employee );
             employee.setId( UUID.randomUUID().toString() );
@@ -38,19 +38,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
             if (employeeEntry.getValue().getIdNumber().equals( employee.getIdNumber() )) {
                 throw new EntityAlreadyExistException( String.format( "Record  already exist  for ID Number: %1$s ", employee.getIdNumber() ) );
-            } else if (employeeEntry.getValue().getMobileNumber().equals( employee.getMobileNumber() )) {
-
-                throw new EntityAlreadyExistException( String.format( "Record  already exist  for Mobile Number: %1$s ", employee.getMobileNumber() ) );
+            } else if (employeeEntry.getValue().getBankAccountNumber().equals( employee.getBankAccountNumber() )) {
+                throw new EntityAlreadyExistException( String.format( "Record  already exist  for Account Number: %1$s ", employee.getBankAccountNumber() ) );
             }
         }
         return null;
     }
 
 
-    public Boolean isIDNumberOrMobileNumberExist(String idNumber, String mobileNumber) {
+    public Boolean isIDNumberOrBankAccountNumberExist(String idNumber, String bankAccountNumber) {
         for (Map.Entry<String, Employee> employeeEntry : employeeMap.entrySet()) {
             Employee employee = employeeEntry.getValue();
-            if (employee.getIdNumber().equals( idNumber ) || employee.getMobileNumber().equals( mobileNumber )) {
+            if (employee.getIdNumber().equals( idNumber ) || employee.getBankAccountNumber().equals( bankAccountNumber )) {
                 return true;
             }
         }
@@ -58,32 +57,32 @@ public class EmployeeServiceImpl implements EmployeeService {
         return false;
     }
 
-
-    public Optional<Employee> searchByFirstNameOrIdNumberOrMobileNumber(String firstName, String idNumber, String mobileNumber) {
-        //Optional<Employee> search = employeeRepository.findByFirstNameOrIdNumberOrMobileNumber( firstName, idNumber, mobileNumber );
+@Override
+    public Optional<Employee> searchByFirstNameOrIdNumberOrBankAccountNumber(String firstName, String idNumber, String bankAccountNumber) {
+        //Optional<Employee> search = employeeRepository.findByFirstNameOrIdNumberOrBankAccountNumber( firstName, idNumber, bankAccountNumber );
         for (Map.Entry<String, Employee> employeeEntry : employeeMap.entrySet()) {
             Employee employee = employeeEntry.getValue();
-            if (employee.getFirstName().equalsIgnoreCase( firstName ) || employee.getIdNumber().equalsIgnoreCase( idNumber ) || employee.getMobileNumber().equalsIgnoreCase( mobileNumber )) {
+            if (employee.getFirstName().equalsIgnoreCase( firstName ) || employee.getIdNumber().equalsIgnoreCase( idNumber ) || employee.getBankAccountNumber().equalsIgnoreCase(bankAccountNumber)) {
                 return Optional.of( employee );
             }
         }
 
         return Optional.empty();
     }
-
+@Override
     public Employee updateEmployeeDetails(Employee employee) {
         //Optional<Employee> searchById = employeeRepository.findById( employee.getId() );
         Employee existingEmployee = employeeMap.get( employee.getId() );
         if (employeeMap.containsKey( employee.getId() )) {
-            if (!employee.getIdNumber().equals( existingEmployee.getIdNumber() ) && !isIDNumberOrMobileNumberExist( employee.getIdNumber(), employee.getMobileNumber() )) {
+            if (!employee.getIdNumber().equals( existingEmployee.getIdNumber() ) && !isIDNumberOrBankAccountNumberExist( employee.getIdNumber(), employee.getBankAccountNumber() )) {
                 throw new EntityAlreadyExistException( String.format( "ID Number already exist  for: %1$s ", employee.getIdNumber() ) );
-            } else if (!employee.getIdNumber().equals( existingEmployee.getIdNumber() ) && !isIDNumberOrMobileNumberExist( employee.getIdNumber(), employee.getMobileNumber() )) {
-                throw new EntityAlreadyExistException( String.format( "Mobile Number  already exist  for: %1$s ", employee.getMobileNumber() ) );
+            } else if (!employee.getIdNumber().equals( existingEmployee.getIdNumber() ) && !isIDNumberOrBankAccountNumberExist( employee.getIdNumber(), employee.getBankAccountNumber() )) {
+                throw new EntityAlreadyExistException( String.format( "Bank Account Number  already exist  for: %1$s ", employee.getBankAccountNumber() ) );
             } else {
                 existingEmployee.setFirstName( employee.getFirstName() );
                 existingEmployee.setLastName( employee.getLastName() );
                 existingEmployee.setIdNumber( employee.getIdNumber() );
-                existingEmployee.setMobileNumber( employee.getMobileNumber() );
+                existingEmployee.setBankAccountNumber( employee.getBankAccountNumber() );
                 existingEmployee.setPhysicalAddress( employee.getPhysicalAddress() );
                 //return employeeRepository.save( existingEmployee );
                 return employeeMap.put( employee.getId(), existingEmployee );
@@ -108,8 +107,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
             sum += a / 10;
             sum += a % 10;
-
-
             isSecond = !isSecond;
 
         }

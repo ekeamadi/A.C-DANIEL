@@ -79,14 +79,15 @@ public class TestEmployeeService {
 
     }
 
+
     @Test
     public void searchByFirstNameOrIdNumberOrMobileNumberTest() {
         Map<String, Employee> employeeMap = new HashMap<>();
         String id = UUID.randomUUID().toString();
         Employee employee = new Employee( id, "John", "Doe", "1234", "9712208665084", "20 main street" );
         employeeMap.put( id, employee );
-        when( employeeService.searchByFirstNameOrIdNumberOrMobileNumber( "John", "", "" ) ).thenReturn( Optional.of( employee ) );
-        Optional<Employee> optionalEmployee = employeeService.searchByFirstNameOrIdNumberOrMobileNumber( "John", "", "" );
+        when( employeeService.searchByFirstNameOrIdNumberOrBankAccountNumber( "John", "", "" ) ).thenReturn( Optional.of( employee ) );
+        Optional<Employee> optionalEmployee = employeeService.searchByFirstNameOrIdNumberOrBankAccountNumber( "John", "", "" );
         assertEquals( "John", optionalEmployee.get().getFirstName() );
 
 

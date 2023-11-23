@@ -42,9 +42,11 @@ public class EmployeeController {
 
     @CrossOrigin
     @GetMapping("/searchByFirstNameOrIdNumberOrMobileNumber/{searchName}")
-    public ResponseEntity<Employee> getByFirstNameOrIdnumberOrMobileNumber(@PathVariable("searchName") String firstName, @PathVariable("searchName") String idNumber, @PathVariable("searchName") String mobileNumber) {
-        Employee employee = employeeService.searchByFirstNameOrIdNumberOrMobileNumber( firstName, idNumber, mobileNumber ).orElseThrow( () -> new EmployeeNotFoundException( String.format( "Employee not found for: %1$s ", firstName != null ? firstName : idNumber != null ? idNumber : mobileNumber != null ? mobileNumber : " " ) ) );
-
+    public ResponseEntity<Employee> rstNameOrIdngetByFiumberOrMobileNumber(@PathVariable("searchName") String firstName, @PathVariable("searchName")
+    String idNumber, @PathVariable("searchName") String mobileNumber) {
+        Employee employee = employeeService.searchByFirstNameOrIdNumberOrBankAccountNumber( firstName, idNumber, mobileNumber )
+                .orElseThrow( () -> new EmployeeNotFoundException( String.format(
+                        "Employee not found for: %1$s ", firstName != null ? firstName : idNumber != null ? idNumber : mobileNumber != null ? mobileNumber : " " ) ) );
         return new ResponseEntity<>( employee, HttpStatus.OK );
     }
 
